@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Random TIFU Post</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h1>Random TIFU Post</h1>
+    <p><strong>Title:</strong> <span id="post-title"></span></p>
+    <p><strong>URL:</strong> <span id="post-url"></span></p>
+    <p><strong>Content:</strong></p>
+    <p id="post-content"></p>
+    <script>
+      fetch('https://www.reddit.com/r/tifu/random.json')
+        .then(response => response.json())
+        .then(data => {
+          const post = data[0].data.children[0].data;
+          const postTitle = document.getElementById('post-title');
+          postTitle.textContent = post.title;
+          const postUrl = document.getElementById('post-url');
+          postUrl.textContent = post.url;
+          const postContent = document.getElementById('post-content');
+          postContent.textContent = post.selftext;
+        })
+        .catch(error => {
+          console.error('Error fetching random post:', error);
+        });
+    </script>
+  </body>
+</html>
